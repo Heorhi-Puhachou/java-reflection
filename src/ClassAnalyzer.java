@@ -9,11 +9,13 @@ public class ClassAnalyzer {
 
         /** Complete the Code **/
 
+        String name = inputClass.getSimpleName();
+
 
         popupTypeInfo.setPrimitive(inputClass.isPrimitive())
                 .setInterface(inputClass.isInterface())
                 .setEnum(inputClass.isEnum())
-                .setName(inputClass.getName())
+                .setName(name)
                 .setJdk(isJdkClass(inputClass))
                 .addAllInheritedClassNames(getAllInheritedClassNames(inputClass));
 
