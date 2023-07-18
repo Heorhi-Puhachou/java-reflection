@@ -7,22 +7,15 @@ public class ClassAnalyzer {
     public static PopupTypeInfo createPopupTypeInfoFromClass(Class<?> inputClass) {
         PopupTypeInfo popupTypeInfo = new PopupTypeInfo();
 
-        /** Complete the Code **/
-
-        String name = inputClass.getSimpleName();
-
-
         popupTypeInfo.setPrimitive(inputClass.isPrimitive())
                 .setInterface(inputClass.isInterface())
                 .setEnum(inputClass.isEnum())
-                .setName(name)
+                .setName(inputClass.getSimpleName())
                 .setJdk(isJdkClass(inputClass))
                 .addAllInheritedClassNames(getAllInheritedClassNames(inputClass));
 
         return popupTypeInfo;
     }
-
-    /*********** Helper Methods ***************/
 
     public static boolean isJdkClass(Class<?> inputClass) {
         if (inputClass.isPrimitive()) {
@@ -41,12 +34,14 @@ public class ClassAnalyzer {
         if (inputClass.isPrimitive()) {
             return null;
         }
+
         if (inputClass.isInterface()) {
             for (Class<?> inh : inputClass.getInterfaces()) {
-                result.add(inh.getName());
+                result.add(inh.getSimpleName());
             }
+        } else {
+            result.add(inputClass.getSuperclass().getSimpleName());
         }
-        result.add(inputClass.getSuperclass().getName());
 
         return result.toArray(new String[0]);
     }
